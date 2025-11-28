@@ -1,0 +1,563 @@
+/* ========================================= */
+/* 0. ANIMAÇÕES (RAIOS, LUZES E PISCADAS) */
+/* ========================================= */
+/* Animação para o efeito Néon (Pulso de brilho) */
+@keyframes neon-pulse {
+    0%, 100% { 
+        box-shadow: 0 0 10px var(--red_neon), 0 0 20px var(--purple_neon); 
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 20px var(--red_neon), 0 0 30px var(--purple_neon); 
+        transform: scale(1.01);
+    }
+}
+
+/* Animação de Flicker (Piscada Agressiva para Títulos) */
+@keyframes neon-text-flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% { 
+        text-shadow: 0 0 10px var(--red_neon); 
+        opacity: 1; 
+    }
+    20%, 24%, 55% { 
+        text-shadow: none; 
+        opacity: 0.95; 
+    }
+    56% { 
+        text-shadow: 0 0 15px var(--purple_neon); 
+    }
+}
+
+/* ========================================= */
+/* 1. VARIÁVEIS DE COR E TIPOGRAFIA */
+/* ========================================= */
+:root {
+    /* Paleta Stranger Things / Dark Retrô */
+    --dark: #121212;      /* Fundo Principal Escuro */
+    --dark700: #212121;   /* Fundo Header/Footer, Cards, Forms */
+    --red_neon: #E53935;  /* Vermelho Néon (Accent Primário) */
+    --purple_neon: #8E24AA; /* Roxo Néon (Accent Secundário) */
+    --metal: #BDBDBD;     /* Cinza Metálico */
+    --fundo_body: #0A0A0A; /* Fundo Geral do Body (Ultra Escuro) */
+    --neutro: #F5F5F5;    /* Texto Principal Claro */
+    
+    /* Sombras */
+    --shadow_neon_red: 0 0 8px rgba(229, 57, 53, 0.8), 0 0 15px rgba(229, 57, 53, 0.4); 
+    --sombra_escura: rgba(0, 0, 0, 0.8);
+}
+
+/* Base e Tipografia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', monospace;
+    color: var(--neutro);
+    line-height: 1.6;
+    background-color: var(--fundo_body);
+    position: relative; 
+}
+
+/* 👾 Efeito de Scanlines (Reforça o tema) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.3) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.15;
+}
+
+a {
+    color: var(--red_neon);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--purple_neon);
+    text-decoration: underline;
+}
+
+.sec {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========================================= */
+/* 2. TÍTULOS E DECORAÇÃO (Flicker Animado) */
+/* ========================================= */
+.sec_tit {
+    text-align: center;
+    margin-bottom: 60px; 
+    color: var(--red_neon);
+    font-size: 2.8em;
+    font-weight: 900;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 10px;
+    /* Efeito de néon e flicker */
+    text-shadow: 0 0 10px rgba(229, 57, 53, 0.9);
+    animation: neon-text-flicker 1.5s infinite alternate; 
+}
+
+.sec_tit::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 5px;
+    background-color: var(--purple_neon);
+    margin: 15px auto 0;
+    border-radius: 2px;
+    transition: width 0.3s ease-out;
+    box-shadow: 0 0 8px var(--purple_neon);
+}
+
+.sec_tit:hover::after {
+    width: 120px;
+}
+
+.sub_tit {
+    color: var(--red_neon);
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-left: 5px solid var(--purple_neon);
+    padding-left: 15px;
+    text-shadow: 0 0 3px rgba(229, 57, 53, 0.4);
+}
+
+/* ========================================= */
+/* 3. HEADER E NAVEGAÇÃO */
+/* ========================================= */
+.hdr {
+    background-color: var(--dark700);
+    color: var(--red_neon);
+    padding: 18px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px var(--red_neon);
+    border-bottom: 2px solid var(--red_neon);
+}
+
+.hdr_cnt {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 1.4em;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--red_neon);
+}
+
+.nav_lst {
+    list-style: none;
+    display: flex;
+}
+
+.nav_lst li a {
+    color: var(--neutro);
+    padding: 10px 18px;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.nav_lst li a:hover {
+    background-color: var(--dark);
+    transform: translateY(-3px);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--purple_neon);
+    color: var(--purple_neon);
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .menu_icon {
+        display: block;
+        cursor: pointer;
+        font-size: 1.8em;
+        transition: transform 0.3s;
+        color: var(--red_neon);
+    }
+    .nav {
+        background-color: var(--dark700);
+    }
+}
+
+
+/* ========================================= */
+/* 4. SEÇÃO HOME (Layout Limpo + Glow) */
+/* ========================================= */
+.home {
+    min-height: 85vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 40px;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(142, 36, 170, 0.1) 0%, var(--dark) 80%);
+}
+
+.area {
+    font-size: 4em;
+    font-weight: 900;
+    color: var(--red_neon);
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(229, 57, 53, 0.8);
+}
+
+.slogan {
+    font-size: 1.3em;
+    color: var(--metal);
+    font-style: italic;
+    border-left: 3px solid var(--purple_neon);
+    padding-left: 10px;
+}
+
+.foto_fundo {
+    background-color: var(--dark700);
+    border-radius: 50%;
+    padding: 10px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 0 0 10px var(--dark), 0 0 30px var(--red_neon);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
+}
+
+.foto_fundo:hover {
+    transform: rotate(-3deg) scale(1.05);
+    box-shadow: 0 0 0 10px var(--dark), 0 0 40px var(--purple_neon);
+}
+
+@media (min-width: 769px) {
+    .area {
+        font-size: 5em;
+    }
+}
+
+/* ========================================= */
+/* 5. SEÇÃO PROJETOS (MARGEM CORRIGIDA - GRID) */
+/* ========================================= */
+.sec.prj {
+    background-color: var(--dark700); 
+    color: var(--neutro);
+    padding-top: 80px; /* Padding vertical garantido */
+    padding-bottom: 80px; 
+    background-image: radial-gradient(circle at 10% 50%, rgba(87, 7, 7, 0.527), transparent 70%);
+}
+
+.sec.prj .sec_tit {
+    margin-bottom: 40px; /* Espaço após o título da seção */
+}
+.sec.prj .prj_nota {
+    color: var(--metal);
+    margin-bottom: 40px; 
+}
+
+.grd {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* CORREÇÃO DA MARGEM: O GAP CONTROLA TODO O ESPAÇAMENTO VERTICAL E HORIZONTAL */
+    gap: 40px; 
+    margin: 0; /* Garante que não haja margens conflitantes no grid container */
+    padding: 0;
+}
+
+.prj_crd {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--dark);
+    border: 3px solid var(--dark); 
+    
+    /* Brilho inicial sutil */
+    box-shadow: 0 0 5px rgba(229, 57, 53, 0.4); 
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                box-shadow 0.5s ease, border-color 0.5s;
+}
+
+.prj_crd:hover {
+    transform: translateY(-10px) scale(1.05);
+    /* Animação de pulso no hover */
+    animation: neon-pulse 1.5s infinite alternate; 
+    border-color: var(--red_neon);
+}
+
+.prj_crd img {
+    width: 100%;
+    height: 180px;
+    display: block;
+    object-fit: cover;
+    border-bottom: 2px solid var(--purple_neon);
+}
+
+.crd_tit {
+    padding: 15px 10px;
+    background-color: var(--dark);
+    color: var(--red_neon);
+    font-weight: 800;
+    font-size: 1em;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-top: 1px dashed var(--metal);
+}
+
+/* ========================================= */
+/* 6. SEÇÃO SOBRE MIM (LAYOUT CENTRALIZADO E LEGÍVEL) */
+/* ========================================= */
+.sec.sobre {
+    background-color: var(--fundo_body);
+    /* **FIX:** Centraliza o bloco de texto no meio da tela */
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left; /* Mantém o texto alinhado à esquerda para leitura */
+}
+
+.sec.sobre h3 {
+    text-align: left;
+    color: var(--red_neon);
+    font-size: 1.5em;
+    border-left: 5px solid var(--purple_neon);
+    padding-left: 15px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.sec.sobre ul {
+    list-style: none;
+    padding-left: 0;
+}
+.sec.sobre li {
+    margin-bottom: 10px;
+    border-left: 3px solid var(--red_neon);
+    padding-left: 10px;
+}
+
+/* ========================================= */
+/* 7. SEÇÃO CONTATO (LAYOUT CENTRALIZADO E FIXO) */
+/* ========================================= */
+.cnt_frm {
+    max-width: 600px;
+    margin: 0 auto; /* Centralização perfeita do bloco */
+    padding: 40px; 
+    border-radius: 10px;
+    background-color: var(--dark); 
+    animation: neon-pulse 3s infinite alternate; 
+    border: 1px solid var(--purple_neon); 
+}
+
+.cnt_frm input[type="text"],
+.cnt_frm input[type="email"],
+.cnt_frm input[type="tel"],
+.cnt_frm textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--metal);
+    background-color: var(--dark700);
+    color: var(--neutro);
+}
+.btn {
+    /* **CORREÇÕES:** Garante botão em bloco, largura total e sem arredondamento */
+    display: block !important; 
+    width: 60% !important; /* Para centralizar (preenche o bloco centralizado) */
+    border-radius: 8px!important; /* Remove qualquer ponta arredondada */
+    border: none; /* Garante que não haja borda padrão */
+    cursor: pointer;
+    
+    /* BOTÃO ESTILO BLOCO NÉON MAIS FORTE */
+    padding: 15px; 
+
+    font-size: 1.3em; 
+    font-weight: 900;
+    box-shadow: 0 0 10px var(--red_neon); 
+    background-color: var(--red_neon);
+    color: var(--dark);
+    transition: all 0.3s ease;
+    align-items: center;
+}
+
+.btn:hover {
+    background-color: var(--purple_neon);
+    color: var(--neutro);
+    transform: translateY(-5px); 
+    animation: neon-pulse 1.5s infinite alternate; 
+}
+
+
+/* ========================================= */
+/* 8. FOOTER (Rodapé) */
+/* ========================================= */
+.ftr {
+    background-color: var(--dark700);
+    color: var(--metal);
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 0.9em;
+    border-top: 2px solid var(--purple_neon);
+}
+
+/* ========================================= */
+/* 9. ANIMAÇÃO DE REVEAL (Para o JavaScript) */
+/* ========================================= */
+.hidden {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+/* ========================================= */
+/* 2. TÍTULOS E DECORAÇÃO (Ajuste Mobile) */
+/* ========================================= */
+@media (max-width: 600px) {
+    .sec_tit {
+        font-size: 2em; /* Reduz o tamanho da fonte em mobile */
+        margin-bottom: 40px;
+    }
+}
+
+/* ========================================= */
+/* 3. HEADER E NAVEGAÇÃO (Regras Mobile) */
+/* ========================================= */
+@media (max-width: 768px) {
+    /* Estilos para o ícone do menu (Hambúrguer) */
+    .menu_icon {
+        display: block;
+        cursor: pointer;
+        font-size: 1.8em;
+        transition: transform 0.3s;
+        color: var(--red_neon);
+        z-index: 101;
+    }
+    
+    /* Estilos iniciais do menu suspenso (fechado) */
+    .nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 0; /* Começa fechado */
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, opacity 0.5s;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        z-index: 90;
+        background-color: var(--dark700);
+    }
+
+    /* Estilos do menu suspenso (aberto - requer JavaScript para .active) */
+    .nav.active {
+        max-height: 500px;
+        opacity: 1;
+        border-top: 1px solid var(--purple_neon);
+    }
+
+    /* Links empilhados */
+    .nav_lst {
+        flex-direction: column; 
+        padding: 10px 0;
+    }
+
+    .nav_lst li a {
+        padding: 15px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--dark);
+    }
+    
+    .nav_lst li a:hover {
+        transform: none; /* Remove a translação no hover mobile */
+    }
+}
+
+/* Estilos de Desktop (Garante que o ícone do menu desapareça) */
+@media (min-width: 769px) {
+    .menu_icon {
+        display: none !important; 
+    }
+}
+
+
+/* ========================================= */
+/* 4. SEÇÃO HOME (Layout Limpo + Glow) */
+/* ========================================= */
+@media (min-width: 769px) {
+    .area {
+        font-size: 5em;
+    }
+}
+
+/* Ajuste HOME MOBILE (600px e abaixo) */
+@media (max-width: 600px) {
+    .area {
+        font-size: 3.5em; 
+    }
+    .home {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .foto_fundo {
+        width: 200px;
+        height: 200px;
+        padding: 8px;
+        box-shadow: 0 0 0 8px var(--dark), 0 0 20px var(--red_neon);
+    }
+    .slogan {
+        font-size: 1.1em;
+    }
+}
+
+
+/* ========================================= */
+/* 7. SEÇÃO CONTATO (Ajuste Mobile) */
+/* ========================================= */
+@media (max-width: 600px) {
+    .cnt_frm {
+        padding: 20px;
+    }
+
+    .btn {
+        width: 100% !important; /* Largura total em telas pequenas */
+        font-size: 1.1em;
+    }
+}
